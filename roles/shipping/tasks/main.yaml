@@ -19,6 +19,7 @@
     login_host: mysql.bharath2103.site
     login_user: root
     login_password: "{{ mysql_root_password }}"
+    login_port: 3306
     target: "{{ item }}"
   loop:
     - /app/db/schema.sql
