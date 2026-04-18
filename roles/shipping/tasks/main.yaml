@@ -8,18 +8,22 @@
     name: common
     tasks_from: maven
 
-- name: import data
+- name: get mysql root password
+  set_fact:
+    mysql_root_password: "{{ lookup('amazon.aws.aws_ssm', '/roboshop/' + env + '/mysql/mysql_root_password', region='us-east-1', decrypt=True) }}"
+
+- name: import shipping schema
   community.mysql.mysql_db:
     name: all
-    login_user: "{{ MYSQL_ROOT_USER }}"
-    login_password: "{{ MYSQL_ROOT_PASSWORD }}"
-    login_host: "{{ MYSQL_HOST }}"
     state: import
+    login_host: mysql.bharath2103.site
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
     target: "{{ item }}"
   loop:
-  - /app/db/schema.sql
-  - /app/db/app-user.sql
-  - /app/db/master-data.sql
+    - /app/db/schema.sql
+    - /app/db/app-user.sql
+    - /app/db/master-data.sql
 
 - name: systemd setup
   include_role:
