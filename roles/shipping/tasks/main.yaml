@@ -12,6 +12,10 @@
   set_fact:
     mysql_root_password: "{{ lookup('amazon.aws.aws_ssm', '/roboshop/' + env + '/mysql/mysql_root_password', region='us-east-1', decrypt=True) }}"
 
+- name: debug password
+  debug:
+    msg: "{{ mysql_root_password }}"
+
 - name: import shipping schema
   community.mysql.mysql_db:
     name: all
@@ -19,7 +23,6 @@
     login_host: mysql.bharath2103.site
     login_user: root
     login_password: "{{ mysql_root_password }}"
-    login_port: 3306
     target: "{{ item }}"
   loop:
     - /app/db/schema.sql
