@@ -17,13 +17,8 @@
     msg: "{{ mysql_root_password }}"
 
 - name: import shipping schema
-  community.mysql.mysql_db:
-    name: all
-    state: import
-    login_host: mysql.bharath2103.site
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    target: "{{ item }}"
+  ansible.builtin.shell: |
+    mysql -h mysql.bharath2103.site -u root -p{{ mysql_root_password }} < {{ item }}
   loop:
     - /app/db/schema.sql
     - /app/db/app-user.sql
