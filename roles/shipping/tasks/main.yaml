@@ -8,21 +8,18 @@
     name: common
     tasks_from: maven
 
-- name: get mysql root password
-  set_fact:
-    mysql_root_password: "{{ lookup('amazon.aws.aws_ssm', '/roboshop/' + env + '/mysql/mysql_root_password', region='us-east-1', decrypt=True) }}"
-
-- name: debug password
-  debug:
-    msg: "{{ mysql_root_password }}"
-
-- name: import shipping schema
-  ansible.builtin.shell: |
-    mysql -h mysql.bharath2103.site -u root -p{{ mysql_root_password }} < {{ item }}
+- name: import data
+  community.mysql.mysql_db:
+    name: all
+    login_user: "{{ MYSQL_ROOT_USER }}"
+    login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+    login_host: "{{ MYSQL_HOST }}"
+    state: import
+    target: "{{ item }}"
   loop:
-    - /app/db/schema.sql
-    - /app/db/app-user.sql
-    - /app/db/master-data.sql
+  - /app/db/schema.sql
+  - /app/db/app-user.sql
+  - /app/db/master-data.sql
 
 - name: systemd setup
   include_role:
