@@ -1,5 +1,5 @@
 - name: stop the service
-  tags: 
+  tags:
   - deployment
   ansible.builtin.service:
     name: "{{ component }}"
@@ -29,4 +29,3 @@
   ansible.builtin.service:
     name: "{{ component }}"
     state: restarted
-    
