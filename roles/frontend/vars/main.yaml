@@ -2,4 +2,4 @@ CATALOGUE_HOST: catalogue.bharath2103.online
 USER_HOST: user.bharath2103.online
 CART_HOST: cart.bharath2103.online
 SHIPPING_HOST: shipping.bharath2103.online
-# PAYMENT_HOST: payment.bharath2103.online
+PAYMENT_HOST: payment.bharath2103.online
