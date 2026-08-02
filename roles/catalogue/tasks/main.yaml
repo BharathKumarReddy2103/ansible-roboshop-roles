@@ -27,7 +27,7 @@
 - name: print catalogue output
   ansible.builtin.debug:
     msg: "{{ catalogue_output }}"
-    # ignore_errors: true
+    ignore_errors: true
     # ignore_unreachable: true
 
 - name: load products
