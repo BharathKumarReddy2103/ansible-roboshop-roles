@@ -21,7 +21,7 @@
 - name: check products loaded or not
   ansible.builtin.command: mongosh --host mongodb.bharath2103.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
   register: catalogue_output
-  # ignore_errors: true
+  ignore_errors: true
   # ignore_unreachable: true
 
 - name: print catalogue output
